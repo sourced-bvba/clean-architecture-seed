@@ -1,5 +1,6 @@
 package be.sourcedbvba.seed;
 
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GetUsersImpl implements GetUsers {
@@ -13,7 +14,12 @@ public class GetUsersImpl implements GetUsers {
     public void getUsers(Request request, Receiver receiver) {
         GetUsers.Response response = new GetUsers.Response(userGateway.getUsers()
                 .stream()
-                .map(u -> new GetUsers.UserResponse(u.name()))
+                .map(new Function<User, UserResponse>() {
+                    @Override
+                    public UserResponse apply(User user) {
+                        return new UserResponse(user.name());
+                    }
+                })
                 .collect(Collectors.toList()));
         receiver.accept(response);
     }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,7 +45,12 @@ public class UserResource {
         @Override
         public void accept(GetUsers.Response response) {
             result = response.users().stream()
-                    .map(r -> new UserViewModel(r.name()))
+                    .map(new Function<GetUsers.UserResponse, UserViewModel>() {
+                        @Override
+                        public UserViewModel apply(GetUsers.UserResponse userResponse) {
+                            return new UserViewModel(userResponse.name());
+                        }
+                    })
                     .collect(Collectors.toList());
         }
 
