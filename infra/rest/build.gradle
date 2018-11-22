@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":app/api")
+
+    compile "org.springframework:spring-webmvc"
+    compile "com.fasterxml.jackson.core:jackson-annotations"
+}

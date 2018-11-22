@@ -14,12 +14,7 @@ public class GetUsersImpl implements GetUsers {
     public void getUsers(Request request, Receiver receiver) {
         GetUsers.Response response = new GetUsers.Response(userGateway.getUsers()
                 .stream()
-                .map(new Function<User, UserResponse>() {
-                    @Override
-                    public UserResponse apply(User user) {
-                        return new UserResponse(user.name());
-                    }
-                })
+                .map(user -> new UserResponse(user.name()))
                 .collect(Collectors.toList()));
         receiver.accept(response);
     }

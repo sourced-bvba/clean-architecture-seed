@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":app/api")
+    compile project(":domain")
+}
